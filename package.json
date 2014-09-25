@@ -28,7 +28,7 @@
     "run-sequence": "^0.3.6"
   },
   "dependencies": {
-    "errors": "^0.2.0",
+    "errors": "git+ssh://git@github.com:hoist/errors",
     "lodash": "^2.4.1"
   }
 }
