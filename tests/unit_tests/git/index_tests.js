@@ -10,14 +10,23 @@ describe('git', function () {
     it('should be an error type', function () {
       expect(notFoundError).to.be.instanceof(Error);
     });
+
+    it('should be a hoist error', function () {
+      expect(errors.isHoistError(notFoundError))
+        .to.eql(true);
+    });
   });
-   describe('InvalidError', function () {
+  describe('InvalidError', function () {
     var invalidError = new errors.git.InvalidError();
     it('should have a 500 code', function () {
       expect(invalidError.code).to.eql(500);
     });
     it('should be an error type', function () {
       expect(invalidError).to.be.instanceof(Error);
+    });
+    it('should be a hoist error', function () {
+      expect(errors.isHoistError(invalidError))
+        .to.eql(true);
     });
   });
 });

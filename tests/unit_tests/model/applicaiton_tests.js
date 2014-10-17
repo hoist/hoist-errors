@@ -14,6 +14,11 @@ describe('model', function () {
       it('should be a model not found error', function () {
         expect(notFoundError).to.be.instanceof(errors.model.NotFoundError);
       });
+
+      it('should be a hoist error', function () {
+        expect(errors.isHoistError(notFoundError))
+          .to.eql(true);
+      });
     });
   });
 });
