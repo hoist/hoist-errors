@@ -14,6 +14,10 @@ describe('files', function () {
       it('should be a file not found error', function () {
         expect(notFoundError).to.be.instanceof(errors.files.NotFoundError);
       });
+      it('should be a hoist error',function(){
+        expect(errors.isHoistError(notFoundError))
+        .to.eql(true);
+      });
     });
   });
 });
