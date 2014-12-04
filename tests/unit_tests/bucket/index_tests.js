@@ -29,4 +29,17 @@ describe('bucket', function () {
         .to.eql(true);
     });
   });
+  describe('SaveError', function () {
+    var saveError = new errors.bucket.SaveError();
+    it('should have a 500 code', function () {
+      expect(saveError.code).to.eql(500);
+    });
+    it('should be an error type', function () {
+      expect(saveError).to.be.instanceof(Error);
+    });
+    it('should be a hoist error', function () {
+      expect(errors.isHoistError(saveError))
+        .to.eql(true);
+    });
+  });
 });
