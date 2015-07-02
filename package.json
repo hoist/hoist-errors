@@ -1,6 +1,6 @@
 {
-  "name": "hoist-errors",
-  "version": "1.0.0",
+  "name": "@hoist/errors",
+  "version": "1.0.1",
   "description": "Hoist Custom Errors",
   "main": "lib/index.js",
   "scripts": {
@@ -28,7 +28,7 @@
     "run-sequence": "^0.3.6"
   },
   "dependencies": {
-    "errors": "git+ssh://git@github.com:hoist/errors",
+    "errors": "git://github.com/hoist/errors",
     "lodash": "^2.4.1"
   }
 }
