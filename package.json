@@ -1,6 +1,6 @@
 {
   "name": "@hoist/errors",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Hoist Custom Errors",
   "main": "lib/index.js",
   "scripts": {
