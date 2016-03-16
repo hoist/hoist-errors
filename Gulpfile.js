@@ -3,7 +3,6 @@ var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var istanbul = require('gulp-istanbul');
 var mocha = require('gulp-mocha');
-var coverageEnforcer = require('gulp-istanbul-enforcer');
 var runSequence = require('run-sequence');
 
 var globs = {
@@ -52,47 +51,29 @@ gulp.task('jshint', function () {
   return runJshint();
 });
 
-
-
-gulp.task('mocha-server-continue', function (cb) {
-  gulp.src(globs.js.lib)
-    .pipe(istanbul())
-    .on('error', function (err) {
-      console.log('istanbul error', err);
-    })
-    .on('finish', function () {
-      mochaServer().on('error', function (err) {
-        console.trace(err);
-        this.emit('end');
-        cb();
-      }).pipe(istanbul.writeReports(coverageOptions))
-        .on('end', cb);
-    });
-});
-gulp.task('enforce-coverage', ['mocha-server'], function () {
-  var options = {
-    thresholds: {
-      statements: 80,
-      branches: 80,
-      lines: 80,
-      functions: 80
-    },
-    coverageDirectory: 'coverage',
-    rootDirectory: process.cwd()
-  };
+var coverageThresholds = {
+  thresholds: {
+    statements: 80,
+    branches: 80,
+    lines: 80,
+    functions: 80
+  },
+  coverageDirectory: 'coverage',
+  rootDirectory: process.cwd()
+};
+gulp.task('pre-test', function () {
   return gulp.src(globs.js.lib)
-    .pipe(coverageEnforcer(options));
-});
-gulp.task('mocha-server', function (cb) {
-  gulp.src(globs.js.lib)
     .pipe(istanbul())
-    .on('finish', function () {
-      mochaServer({
-        reporter: 'spec'
-      })
-        .pipe(istanbul.writeReports(coverageOptions))
-        .on('end', cb);
-    });
+    .pipe(istanbul.hookRequire());
+});
+gulp.task('mocha-server', ['pre-test'], function () {
+
+  mochaServer({
+      reporter: 'spec'
+    })
+    .pipe(istanbul.writeReports(coverageOptions))
+    .pipe(istanbul.enforceThresholds(coverageThresholds));
+
 });
 
 gulp.task('watch', function () {
@@ -100,7 +81,8 @@ gulp.task('watch', function () {
   var watching = false;
   gulp.start(
     'jshint',
-    'mocha-server-continue', function () {
+    'mocha-server',
+    function () {
       // Protect against this function being called twice
       if (!watching) {
         watching = true;
@@ -111,20 +93,17 @@ gulp.task('watch', function () {
     });
 });
 gulp.task('seq-test', function () {
-  runSequence('jshint', 'mocha-server-continue');
+  runSequence('jshint', 'mocha-server');
 });
 gulp.task('test', function () {
   return gulp.start('jshint-build',
-    'mocha-server',
-    'enforce-coverage');
+    'mocha-server');
 });
 gulp.task('build', function () {
   return gulp.start('jshint-build',
-    'mocha-server',
-    'enforce-coverage');
+    'mocha-server');
 });
 gulp.task('default', function () {
   return gulp.start('jshint-build',
-    'mocha-server',
-    'enforce-coverage');
+    'mocha-server');
 });

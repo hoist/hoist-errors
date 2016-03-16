@@ -17,18 +17,18 @@
   },
   "homepage": "https://github.com/hoist/hoist-errors",
   "devDependencies": {
-    "chai": "^3.0.0",
-    "gulp": "^3.9.0",
-    "gulp-istanbul": "^0.3.1",
-    "gulp-istanbul-enforcer": "^1.0.3",
-    "gulp-jshint": "^1.11.2",
-    "gulp-mocha": "^2.1.2",
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-istanbul": "^0.10.3",
+    "gulp-jshint": "^2.0.0",
+    "gulp-mocha": "^2.2.0",
+    "jshint": "^2.9.1",
     "jshint-growl-reporter": "^1.0.0",
-    "jshint-stylish": "^2.0.1",
-    "run-sequence": "^1.1.1"
+    "jshint-stylish": "^2.1.0",
+    "run-sequence": "^1.1.5"
   },
   "dependencies": {
-    "errors": "git://github.com/hoist/errors",
-    "lodash": "^3.10.0"
+    "errors": "^0.3.0",
+    "lodash": "^4.6.1"
   }
 }
